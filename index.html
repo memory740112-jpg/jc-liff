@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>志晟鋼模｜LINE 諮詢</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0f1b2d;
+      --ink-2: #1c2c44;
+      --steel: #2e4a6b;
+      --accent: #d9982a;
+      --accent-deep: #b5791c;
+      --paper: #f5f7fa;
+      --card: #ffffff;
+      --muted: #6b7b8f;
+      --line: #e4e9f0;
+      --ok: #1e8e5a;
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      font-family: 'Noto Sans TC', system-ui, sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    body { padding-bottom: 32px; }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(150deg, var(--ink) 0%, var(--steel) 100%);
+      color: #fff;
+      padding: 34px 22px 28px;
+      border-radius: 0 0 28px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -40px; top: -40px;
+      width: 160px; height: 160px;
+      background: radial-gradient(circle, rgba(217,152,42,.35), transparent 70%);
+    }
+    .hero .kicker {
+      font-size: 12px; letter-spacing: .18em; color: #e9c98a;
+      font-weight: 700; text-transform: uppercase;
+    }
+    .hero h1 { font-size: 24px; font-weight: 900; margin-top: 6px; letter-spacing: .02em; }
+    .hero p { font-size: 13px; margin-top: 8px; color: #cfd9e6; max-width: 34em; }
+
+    /* Profile card */
+    .profile-card {
+      margin: -18px 16px 0;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 26px rgba(15,27,45,.10);
+      padding: 16px 18px;
+      display: flex; align-items: center; gap: 14px;
+      position: relative; z-index: 2;
+    }
+    .avatar {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--line); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar .placeholder { font-size: 24px; color: var(--steel); }
+    .identity { min-width: 0; }
+    .identity .name { font-weight: 900; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .identity .role { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .badge {
+      margin-left: auto; flex-shrink: 0;
+      font-size: 11px; font-weight: 700; color: var(--ok);
+      background: #e6f5ec; border: 1px solid #b8e2ca;
+      padding: 4px 10px; border-radius: 999px;
+    }
+    .badge.online { color: var(--ok); }
+    .badge.guest { color: var(--steel); background: #e8eef6; border-color: #c6d4e8; }
+
+    /* Sections */
+    section { padding: 22px 18px 0; }
+    .section-title {
+      font-size: 14px; font-weight: 700; color: var(--ink);
+      display: flex; align-items: center; gap: 8px; margin-bottom: 14px;
+    }
+    .section-title::before {
+      content: ""; width: 4px; height: 16px; border-radius: 2px; background: var(--accent);
+    }
+
+    /* Action buttons */
+    .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .action {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 14px; padding: 16px 14px;
+      text-align: center; cursor: pointer; transition: .18s ease;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      font-family: inherit;
+    }
+    .action:active { transform: scale(.97); }
+    .action .icon { font-size: 24px; line-height: 1; }
+    .action .label { font-size: 13px; font-weight: 700; }
+    .action .sub { font-size: 11px; color: var(--muted); }
+    .action.primary {
+      background: var(--accent); border-color: var(--accent-deep); color: #1c1504;
+    }
+    .action.primary .sub { color: rgba(28,21,4,.7); }
+    .action.full { grid-column: 1 / -1; flex-direction: row; justify-content: center; gap: 10px; }
+
+    /* Info cards */
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .info {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 12px; padding: 12px 14px;
+    }
+    .info .k { font-size: 11px; color: var(--muted); }
+    .info .v { font-size: 13px; font-weight: 700; margin-top: 2px; }
+
+    /* FAQ */
+    .faq-item { background: var(--card); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
+    .faq-q {
+      width: 100%; text-align: left; font-family: inherit;
+      background: transparent; border: none; padding: 14px 16px;
+      font-size: 13px; font-weight: 700; color: var(--ink);
+      display: flex; justify-content: space-between; align-items: center; gap: 10px;
+      cursor: pointer;
+    }
+    .faq-q .chev { color: var(--accent); transition: transform .2s; font-size: 12px; }
+    .faq-item.open .faq-q .chev { transform: rotate(180deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height .25s ease; }
+    .faq-item.open .faq-a { max-height: 300px; }
+    .faq-a p { padding: 0 16px 14px; font-size: 12.5px; color: #46566b; }
+
+    /* Footer */
+    .footer { margin-top: 26px; padding: 0 18px; text-align: center; font-size: 11px; color: var(--muted); }
+    .footer .brand { font-weight: 700; color: var(--steel); }
+    .toast {
+      position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 80px);
+      background: var(--ink); color: #fff; font-size: 13px;
+      padding: 10px 18px; border-radius: 999px; opacity: 0;
+      transition: .3s ease; z-index: 50; box-shadow: 0 8px 24px rgba(0,0,0,.25);
+      max-width: 86vw; text-align: center;
+    }
+    .toast.show { transform: translate(-50%, 0); opacity: 1; }
+    .banner {
+      margin: 18px 16px 0; padding: 12px 14px;
+      border-radius: 12px; font-size: 12.5px;
+      background: #fff4e0; border: 1px solid #f0d49a; color: #7a5310;
+      display: none;
+    }
+
+    /* 報價表單 Modal */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 60;
+      background: rgba(10,18,30,.55);
+      display: none; align-items: flex-end;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-sheet {
+      width: 100%; max-height: 90vh; overflow-y: auto;
+      background: var(--card); border-radius: 22px 22px 0 0;
+      padding: 22px 18px 38px;
+    }
+    .modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .modal-title { font-size: 17px; font-weight: 900; }
+    .modal-close {
+      border: none; background: var(--paper); color: var(--ink);
+      width: 34px; height: 34px; border-radius: 50%;
+      font-size: 16px; cursor: pointer; font-family: inherit;
+    }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 6px; color: var(--ink-2); }
+    .form-group label .req { color: #c0392b; }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%; font-family: inherit; font-size: 14px;
+      padding: 12px 12px; border: 1px solid var(--line);
+      border-radius: 10px; background: #fbfcfe; color: var(--ink);
+      outline: none; transition: border-color .15s;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent); }
+    .form-group textarea { resize: vertical; min-height: 64px; }
+    .file-drop {
+      border: 1.5px dashed #bcc9d9; border-radius: 12px;
+      background: #f8fafc; padding: 14px; text-align: center;
+      color: var(--muted); font-size: 12.5px; cursor: pointer;
+    }
+    .file-drop input { display: none; }
+    .file-list { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .file-chip {
+      background: #eef2f8; color: var(--ink-2);
+      font-size: 11.5px; padding: 4px 10px; border-radius: 999px;
+    }
+    .submit-btns { display: grid; gap: 10px; margin-top: 18px; }
+    .submit-btns .action { width: 100%; }
+    .hint { font-size: 11px; color: var(--muted); margin-top: 12px; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="kicker">JC MOLD GROUP ＆ 志晟鋼模</div>
+    <h1>模具設計．製造．射出成型</h1>
+    <p>從模流分析、模具開發到射出量產的一站式服務，協助你把產品從概念變成實體。</p>
+  </div>
+
+  <!-- Profile -->
+  <div class="profile-card" id="profileCard">
+    <div class="avatar"><span class="placeholder" id="avatarPlaceholder">⚙️</span></div>
+    <div class="identity">
+      <div class="name" id="profileName">載入中…</div>
+      <div class="role" id="profileRole">LINE 官方帳號訪客</div>
+    </div>
+    <span class="badge" id="profileBadge">LINE</span>
+  </div>
+
+  <!-- Optional notice when opened outside LINE -->
+  <div class="banner" id="envBanner">
+    目前非在 LINE 應用程式內開啟，部分 LINE 功能（如傳訊息、取得個人檔案）可能不可用。
+  </div>
+
+  <!-- Actions -->
+  <section>
+    <div class="section-title">立即諮詢</div>
+    <div class="actions">
+      <button class="action primary" id="btnQuote">
+        <span class="icon">💬</span>
+        <span class="label">索取報價</span>
+        <span class="sub">開模／射出估價</span>
+      </button>
+      <button class="action primary" id="btnCall">
+        <span class="icon">📞</span>
+        <span class="label">撥打電話</span>
+        <span class="sub">業務專線</span>
+      </button>
+      <button class="action" id="btnShare">
+        <span class="icon">↗️</span>
+        <span class="label">分享公司</span>
+        <span class="sub">分享給好友</span>
+      </button>
+      <button class="action" id="btnMap">
+        <span class="icon">📍</span>
+        <span class="label">查看位置</span>
+        <span class="sub">Google 地圖</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Company quick info -->
+  <section>
+    <div class="section-title">公司資訊</div>
+    <div class="info-grid">
+      <div class="info"><div class="k">服務項目</div><div class="v">模流／模具／射出／噴塗／組立／檢驗</div></div>
+      <div class="info"><div class="k">模具精度</div><div class="v">最高 2μm</div></div>
+      <div class="info"><div class="k">射出設備</div><div class="v">約 18T～180T</div></div>
+      <div class="info"><div class="k">認證</div><div class="v">ISO 9001／13485／16949 體系</div></div>
+    </div>
+    <div class="info-grid" style="margin-top:10px;">
+      <div class="info" style="grid-column:1 / -1;">
+        <div class="k">地址</div>
+        <div class="v">新北市中和區中山路二段380巷2號</div>
+      </div>
+      <div class="info" style="grid-column:1 / -1;">
+        <div class="k">信箱</div>
+        <div class="v">pychan@email.jcps.com.tw</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <div class="section-title">常見問題</div>
+
+    <div class="faq-item">
+      <button class="faq-q">報價需要提供哪些資料？<span class="chev">▼</span></button>
+      <div class="faq-a"><p>建議提供 ① 2D／3D 圖檔 ② 塑膠材料牌號 ③ 預計年產量 ④ 外觀／表面與尺寸公差要求。資料越完整，報價越準確。</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">模具交期大約多久？<span class="chev">▼</span></button>
+      <div class="faq-a"><p>交期依產品尺寸、穴數、結構與精度而定。收到完整圖檔與需求後，我們會提供預估交期，不隨意承諾天數。</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">什麼情況建議做模流分析？<span class="chev">▼</span></button>
+      <div class="faq-a"><p>當產品結構複雜、外觀要求高，或易發生翹曲、縮水、結合線、困氣時，建議開模前先行模流分析。</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">有舊模具可以移模嗎？<span class="chev">▼</span></button>
+      <div class="faq-a"><p>可以評估。請提供舊模圖檔或照片、目前射出產品與材料，我們會先確認模具狀況再評估試模與後續生產。</p></div>
+    </div>
+  </section>
+
+  <!-- 報價需求表單 Modal -->
+  <div class="modal-overlay" id="quoteModal">
+    <div class="modal-sheet">
+      <div class="modal-head">
+        <div class="modal-title">報價需求表單</div>
+        <button class="modal-close" id="quoteOpenClose" aria-label="關閉">✕</button>
+      </div>
+
+      <div class="form-group">
+        <label>公司／聯絡人 <span class="req">*</span></label>
+        <input type="text" id="qCompany" placeholder="例：OO科技 王先生" />
+      </div>
+      <div class="form-group">
+        <label>聯絡方式（電話／Email／LINE）</label>
+        <input type="text" id="qContact" placeholder="例：09xx-xxx-xxx" />
+      </div>
+      <div class="form-group">
+        <label>產品名稱</label>
+        <input type="text" id="qName" placeholder="例：連接器外殼" />
+      </div>
+      <div class="form-group">
+        <label>塑膠材料／牌號</label>
+        <input type="text" id="qMaterial" placeholder="例：PA66 或 ABS（含玻纖請註明）" />
+      </div>
+      <div class="form-group">
+        <label>預計年產量</label>
+        <input type="text" id="qVolume" placeholder="例：500,000 pcs/年" />
+      </div>
+      <div class="form-group">
+        <label>穴數需求（如有）</label>
+        <input type="text" id="qCavity" placeholder="例：1穴 / 2穴 / 請建議" />
+      </div>
+      <div class="form-group">
+        <label>外觀／表面與精度要求</label>
+        <textarea id="qSurface" placeholder="例：咬花、拋光、公差 ±0.05mm"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>上傳 2D／3D 圖檔（可多選）</label>
+        <div class="file-drop" id="quoteDrop">點擊選擇檔案（STEP/IGES/DWG/PDF…）<input type="file" id="quoteFiles" multiple accept=".step,.stp,.iges,.igs,.dwg,.pdf,.x_t,.x_b,.stl,.prt,.sldprt" /></div>
+        <div class="file-list" id="quoteFileList"></div>
+      </div>
+
+      <div class="submit-btns">
+        <button class="action primary" id="quoteSendEmail">
+          <span>📧 以 Email 寄送（並附圖檔）</span>
+        </button>
+        <button class="action" id="quoteSendLine">
+          <span>💬 傳給 LINE 專員</span>
+        </button>
+        <button class="action" id="quoteCopy">
+          <span>📋 複製需求摘要</span>
+        </button>
+      </div>
+      <div class="hint">Email 為預填信件，請將圖檔附加於信件後寄出。</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="brand">志晟鋼模 · JC MOLD GROUP</div>
+    <div>© 2026 志晟鋼模. All rights reserved.</div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- LIFF SDK -->
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <script>
+    (function () {
+      // ===== 請填入你的 LIFF ID（LINE Developers 後台申請） =====
+      var LIFF_ID = "2012586719-Tun3U479";
+
+      // ===== 業務資訊（已自動填入官方真實資料） =====
+      var COMPANY = {
+        phone: "+886-2-2240-5801",                    // 業務電話（含國碼）
+        email: "pychan@email.jcps.com.tw",            // 聯絡信箱
+        website: "https://jcgoods.com/",              // 官方網站
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=No.2,+Lane+380,+Chung-Shan+Rd.+Sec.+2,+Chung-Ho,+New+Taipei+City+235,+Taiwan"
+      };
+
+      var liff = window.liff;
+      var toastEl = document.getElementById("toast");
+      var toastTimer = null;
+      var quoteModal = null;
+
+      function toast(msg) {
+        toastEl.textContent = msg;
+        toastEl.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () { toastEl.classList.remove("show"); }, 2600);
+      }
+
+      // ----- LIFF init -----
+      function initLiff() {
+        if (!liff) {
+          setGuest("無法載入 LINE SDK");
+          return;
+        }
+        liff.init({ liffId: LIFF_ID })
+          .then(function () {
+            if (liff.isLoggedIn()) {
+              loadProfile();
+            } else {
+              setGuest("請登入 LINE 以取得完整功能");
+            }
+            bindActions();
+          })
+          .catch(function (err) {
+            // 在 LINE 之外開啟或 LIFF 設定未完成
+            setGuest("預覽模式");
+            showBanner();
+            bindActions();
+            console.error("LIFF init error:", err);
+          });
+      }
+
+      function loadProfile() {
+        liff.getProfile()
+          .then(function (profile) {
+            document.getElementById("profileName").textContent = profile.displayName || "LINE 用戶";
+            var role = document.getElementById("profileRole");
+            role.textContent = "已驗證 LINE 用戶";
+            var badge = document.getElementById("profileBadge");
+            badge.textContent = "已登入";
+            badge.classList.add("online");
+            if (profile.pictureUrl) {
+              var av = document.getElementById("avatarPlaceholder");
+              var img = document.createElement("img");
+              img.src = profile.pictureUrl;
+              img.alt = "avatar";
+              av.parentNode.appendChild(img);
+              av.style.display = "none";
+            }
+          })
+          .catch(function () { setGuest("LINE 用戶"); });
+      }
+
+      function setGuest(name) {
+        document.getElementById("profileName").textContent = name;
+        var badge = document.getElementById("profileBadge");
+        badge.textContent = "訪客";
+        badge.classList.add("guest");
+      }
+
+      function showBanner() {
+        document.getElementById("envBanner").style.display = "block";
+      }
+
+      // ----- 報價表單 -----
+      function setupQuoteForm() {
+        var overlay = document.getElementById("quoteModal");
+        var fileInput = document.getElementById("quoteFiles");
+        var fileList = document.getElementById("quoteFileList");
+        var files = [];
+
+        function escapeHtml(s) {
+          return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+        function fieldVal(id) {
+          var el = document.getElementById(id);
+          return el ? el.value.trim() : "";
+        }
+        function buildSummary() {
+          var lines = [];
+          lines.push("【志晟鋼模・報價需求】");
+          lines.push("聯絡人/公司：" + (fieldVal("qCompany") || "(未填)"));
+          lines.push("聯絡方式：" + (fieldVal("qContact") || "(未填)"));
+          lines.push("產品名稱：" + (fieldVal("qName") || "(未填)"));
+          lines.push("塑膠材料/牌號：" + (fieldVal("qMaterial") || "(未填)"));
+          lines.push("預計年產量：" + (fieldVal("qVolume") || "(未填)"));
+          lines.push("穴數需求：" + (fieldVal("qCavity") || "(未填)"));
+          lines.push("外觀/精度要求：" + (fieldVal("qSurface") || "(未填)"));
+          if (files.length) {
+            lines.push("已選擇附件：" + files.map(function (x) { return x.name; }).join("、"));
+          }
+          return lines.join("\n");
+        }
+
+        document.getElementById("quoteOpenClose").addEventListener("click", function () {
+          overlay.classList.remove("open");
+        });
+        overlay.addEventListener("click", function (e) {
+          if (e.target === overlay) overlay.classList.remove("open");
+        });
+        document.getElementById("quoteDrop").addEventListener("click", function () {
+          fileInput.click();
+        });
+        fileInput.addEventListener("change", function () {
+          files = Array.prototype.slice.call(fileInput.files);
+          fileList.innerHTML = files.length
+            ? files.map(function (x) { return "<span class='file-chip'>" + escapeHtml(x.name) + "</span>"; }).join("")
+            : "";
+        });
+
+        document.getElementById("quoteSendEmail").addEventListener("click", function () {
+          var subject = encodeURIComponent("模具報價需求：" + (fieldVal("qName") || "未命名產品"));
+          var body = encodeURIComponent(buildSummary() + "\n\n※ 請將 2D/3D 圖檔附加於此信件中一併寄出。");
+          location.href = "mailto:pychan@email.jcps.com.tw?subject=" + subject + "&body=" + body;
+          toast("已開啟郵件，請附上圖檔寄出");
+        });
+
+        document.getElementById("quoteSendLine").addEventListener("click", function () {
+          if (liff && liff.isInClient()) {
+            liff.sendMessages([{ type: "text", text: buildSummary() }])
+              .then(function () { toast("已傳給 LINE 專員"); })
+              .catch(function () { toast("傳送失敗，請改用 Email"); });
+          } else {
+            toast("請於 LINE 內開啟再使用此功能");
+          }
+        });
+
+        document.getElementById("quoteCopy").addEventListener("click", function () {
+          var txt = buildSummary();
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(txt).then(function () { toast("已複製需求摘要"); });
+          } else {
+            var ta = document.createElement("textarea");
+            ta.value = txt;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            document.body.removeChild(ta);
+            toast("已複製需求摘要");
+          }
+        });
+
+        return {
+          open: function () { overlay.classList.add("open"); }
+        };
+      }
+
+      // ----- Actions -----
+      function bindActions() {
+        quoteModal = setupQuoteForm();
+        document.getElementById("btnQuote").addEventListener("click", function () {
+          if (quoteModal) quoteModal.open();
+        });
+
+        document.getElementById("btnCall").addEventListener("click", function () {
+          location.href = "tel:" + COMPANY.phone;
+        });
+
+        document.getElementById("btnShare").addEventListener("click", function () {
+          var shareText = "志晟鋼模｜模具設計製造與射出成型，一站式服務。";
+          if (liff && typeof liff.shareTargetPicker === "function") {
+            liff.shareTargetPicker([{ type: "text", text: shareText }])
+              .catch(function () { toast("分享已取消"); });
+          } else {
+            openWebsite(COMPANY.website);
+          }
+        });
+
+        document.getElementById("btnMap").addEventListener("click", function () {
+          openWebsite(COMPANY.mapUrl);
+        });
+
+        // FAQ toggle
+        var qs = document.querySelectorAll(".faq-q");
+        qs.forEach(function (q) {
+          q.addEventListener("click", function () {
+            q.parentNode.classList.toggle("open");
+          });
+        });
+      }
+
+      function openWebsite(url) {
+        if (liff && liff.openWindow) {
+          liff.openWindow({ url: url, external: true });
+        } else {
+          window.open(url, "_blank");
+        }
+      }
+
+      // ----- Boot -----
+      if (liff) {
+        initLiff();
+      } else {
+        setGuest("預覽模式");
+        showBanner();
+        bindActions();
+      }
+    })();
+  </script>
+</body>
+</html>
