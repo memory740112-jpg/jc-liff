@@ -250,6 +250,13 @@
         <span class="sub">Google 地圖</span>
       </button>
     </div>
+    <div class="actions" style="margin-top:12px;">
+      <button class="action full" id="btnWebsite">
+        <span class="icon">🌐</span>
+        <span class="label">官方網站</span>
+        <span class="sub">jcgoods.com</span>
+      </button>
+    </div>
   </section>
 
   <!-- Company quick info -->
@@ -557,6 +564,10 @@
 
         document.getElementById("btnMap").addEventListener("click", function () {
           openWebsite(COMPANY.mapUrl);
+        });
+
+        document.getElementById("btnWebsite").addEventListener("click", function () {
+          openWebsite(COMPANY.website);
         });
 
         // FAQ toggle
